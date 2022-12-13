@@ -2,7 +2,12 @@ import styled from "styled-components"
 
 export const StyledHeader = styled.header`
     width: 100%;
-    border-bottom: 1px solid var(--color-grey-3);   
+    background-color: var(--color-grey-4);
+    border-bottom: 1px solid var(--color-grey-3);  
+    
+    position: fixed;
+    top: 0;
+    z-index: 0;
 `
 
 export const StyledNav = styled.nav`
@@ -13,7 +18,7 @@ export const StyledNav = styled.nav`
     width: 775px;
     height: 72px;
     margin: 0 auto;
-
+    
     button {
         padding: 0rem 1rem;
         height: 32px;

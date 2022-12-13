@@ -37,7 +37,7 @@ export const StyledForm = styled.form`
         font-weight: 400;
         font-size: 10px;
         line-height: 0px;
-        color: var(--color-grey-1);
+        color: var(--color-primary);
 
         margin-bottom: 10px;
     }

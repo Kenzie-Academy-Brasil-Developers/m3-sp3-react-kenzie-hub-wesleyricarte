@@ -9,6 +9,9 @@ export const GlobalStyle = createGlobalStyle`
 
         font-family: "Inter", sans-serif;
     }
+    *::-webkit-scrollbar {
+        display: none;
+    }
 
     button{
         cursor: pointer;
@@ -45,5 +48,6 @@ export const GlobalStyle = createGlobalStyle`
         width: 100%;
         height: 100%;
         background-color: var(--color-grey-4);
+        margin-bottom: 2rem;
     }
 `

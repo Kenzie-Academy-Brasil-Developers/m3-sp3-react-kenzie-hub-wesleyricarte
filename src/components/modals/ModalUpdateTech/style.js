@@ -1,11 +1,60 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
-export const StyledForm = styled.form`
+export const StyledModal = styled.div`
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    background-color: rgba(0,0,0, 0.8);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > div {
+        background-color: var(--color-grey-3);
+        border-radius: 4px;
+
+        width: 370px;
+    }
+`
+
+export const StyledHeaderModal = styled.header`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: var(--color-grey-2);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+
+    h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--color-grey-0);
+    }
+
+    button {
+        height: 24px;
+        color: var(--color-grey-1);
+    }
+`
+
+export const StyledFormUpdateTech = styled.form`
     display: flex;
     flex-direction: column;
-    
+
     width: 100%;
     gap: 20px;
+    padding: 32px 20px;
 
     h2 {
         font-weight: 700;
@@ -37,15 +86,6 @@ export const StyledForm = styled.form`
         margin-bottom: 10px;
     }
 
-    & > div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        
-        gap: 22px;
-        padding-bottom: 16px;
-    }
-
     section {
         display: flex;
         flex-direction: column;
@@ -72,6 +112,7 @@ export const StyledForm = styled.form`
     }
     input:focus {
         border: 1.3px solid var(--color-grey-0);
+        color: var(--color-grey-0);
     }
 
     select, option {
@@ -92,20 +133,47 @@ export const StyledForm = styled.form`
             border: 1.3px solid var(--color-grey-0);
         }
     }
+`
 
-    button {
-        width: 100%;
+export const StyledDivButtonsModal = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 48px;
+
+    .btnSub {
+        width: 63%;
         height: 48px;
 
         background-color: var(--color-primary);
         color: var(--color-grey-0);
         border-radius: 4px;
-
+        
         font-weight: 500;
         font-size: 16px;
         line-height: 26px;
     }
-    button:hover{
+    .btnSub:hover{
         background-color: var(--color-primary-focus);
+    }
+    
+    .btnDel {
+        height: 48px;
+        padding: 0 22px;
+        
+        background-color: var(--color-grey-1);
+        color: var(--color-grey-0);
+        border-radius: 4px;
+        
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 26px;
+    }
+    .btnDel:hover {
+        background-color: var(--color-grey-2);
+
+
     }
 `

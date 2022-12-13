@@ -1,12 +1,11 @@
+import Logo from "../../components/Logo";
+import Button from "../../components/Button";
+import FormRegister from "../../components/FormRegister";
 import { useNavigate } from "react-router-dom";
 import { StyledMain, StyledBoxRegister } from "./style";
-import FormRegister from "../../components/formRegister";
-import Button from "../../components/button";
-import Logo from "../../components/logo";
 
-const RegisterPage = ({ authentication }) => {
+const RegisterPage = () => {
 	const navigate = useNavigate();
-	authentication && navigate("/dashboard");
 
 	return (
 		<StyledMain>

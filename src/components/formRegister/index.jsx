@@ -1,9 +1,9 @@
-import Button from "../button";
-import { StyledForm } from "./style";
-import { registerSchema } from "./schema";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import api from "../../services/api.js";
+import Button from "../Button";
+import { useForm } from "react-hook-form";
+import { StyledForm } from "./style";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from "./schema";
 import { toast, Toaster } from "react-hot-toast";
 
 const FormRegister = ({ navigate }) => {
@@ -25,37 +25,43 @@ const FormRegister = ({ navigate }) => {
 		course_module,
 	}) => {
 		const user = { name, email, password, bio, contact, course_module };
-		console.log(user);
-		const save = { email };
-		api.post("/users", user)
-			.then((response) => {
-				console.log(response);
-				localStorage.setItem("@KenzieHub:user", JSON.stringify(save));
-				toast.success("Usuário Registrado!", {
-					style: {
-						border: "solid 2px var(--color-success)",
-					},
-					iconTheme: {
-						primary: "var(--color-success)",
-						secondary: "#ffffff",
-					},
-				});
-				setTimeout(() => {
-					navigate("/");
-				}, 2800);
-			})
-			.catch((err) => {
-				toast.error(`${err.response.data.message}`, {
-					style: {
-						border: "solid 2px var(--color-negative)",
-					},
-					iconTheme: {
-						primary: "var(--color-negative)",
-						secondary: "#ffffff",
-					},
-				});
-			});
+		registerPost(user);
 	};
+
+	async function registerPost(user) {
+		try {
+			const request = await api.post("/users", user);
+
+			const response = await request.data;
+
+			localStorage.setItem("@KenzieHub:userMail", response.email);
+
+			toast.success("Usuário Registrado!", {
+				style: {
+					border: "solid 2px var(--color-success)",
+				},
+				iconTheme: {
+					primary: "var(--color-success)",
+					secondary: "#ffffff",
+				},
+				duration: 3000,
+			});
+			setTimeout(() => {
+				navigate("/");
+			}, 2800);
+		} catch (error) {
+			toast.error(`${error.response.data.message}`, {
+				style: {
+					border: "solid 2px var(--color-negative)",
+				},
+				iconTheme: {
+					primary: "var(--color-negative)",
+					secondary: "#ffffff",
+				},
+				duration: 5000,
+			});
+		}
+	}
 
 	return (
 		<StyledForm onSubmit={handleSubmit(onSubmitFunction)} noValidate>
@@ -135,7 +141,9 @@ const FormRegister = ({ navigate }) => {
 			<section>
 				<label>Selecionar Módulo</label>
 				<select {...register("course_module")}>
-					<option value="">Selecionar módulo</option>
+					<option value="" disabled>
+						Selecionar módulo
+					</option>
 					<option value="Primeiro módulo (Introdução ao Frontend)">
 						Primeiro módulo
 					</option>
@@ -153,7 +161,7 @@ const FormRegister = ({ navigate }) => {
 			</section>
 
 			<Button type="submit">Cadastrar</Button>
-			<Toaster position="top-right" reverseOrder={false} />
+			<Toaster />
 		</StyledForm>
 	);
 };
