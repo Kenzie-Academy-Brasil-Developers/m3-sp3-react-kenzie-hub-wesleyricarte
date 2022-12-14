@@ -2,11 +2,11 @@ import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { StyledMain } from "./style";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts/UserContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import { HiOutlineTrash } from "react-icons/hi";
 import ModalAddTech from "../../components/modals/ModalAddTech";
 import ModalUpdateTech from "../../components/modals/ModalUpdateTech";
+import { UserContext } from "../../contexts/UserContext";
 
 const DashboardPage = () => {
 	const { user } = useContext(UserContext);

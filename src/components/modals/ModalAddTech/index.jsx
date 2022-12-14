@@ -1,13 +1,16 @@
-import api from "../../../services/api";
 import Button from "../../Button";
 import { StyledFormAddTech, StyledHeaderModal, StyledModal } from "./style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addTechSchema } from "./addTechSchema";
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { AiOutlineClose } from "react-icons/ai";
+import { useContext } from "react";
+import { TechContext } from "../../../contexts/TechContext";
 
 const ModalAddTech = ({ setShowModalAddTech }) => {
+	const { postTech } = useContext(TechContext);
+
 	const {
 		register,
 		handleSubmit,
@@ -20,46 +23,11 @@ const ModalAddTech = ({ setShowModalAddTech }) => {
 	const onSubmitFunction = ({ title, status }) => {
 		const newTech = { title, status };
 		postTech(newTech);
+		setShowModalAddTech(false);
+		setTimeout(() => {
+			window.location.reload();
+		}, 2800);
 	};
-
-	async function postTech(newTech) {
-		try {
-			const request = await api.post("/users/techs", newTech);
-
-			const response = await request.data;
-
-			toast.success(
-				`Técnologia ${response.title} com status ${response.status} adicionada!`,
-				{
-					style: {
-						border: "solid 2px var(--color-success)",
-					},
-					iconTheme: {
-						primary: "var(--color-success)",
-						secondary: "#ffffff",
-					},
-					duration: 5000,
-				}
-			);
-
-			setTimeout(() => {
-				setShowModalAddTech(false);
-				window.location.reload();
-			}, 2800);
-		} catch (error) {
-			console.error(error);
-			toast.error(`${error.response.data.message}`, {
-				style: {
-					border: "solid 2px var(--color-negative)",
-				},
-				iconTheme: {
-					primary: "var(--color-negative)",
-					secondary: "#ffffff",
-				},
-				duration: 5000,
-			});
-		}
-	}
 
 	return (
 		<StyledModal>

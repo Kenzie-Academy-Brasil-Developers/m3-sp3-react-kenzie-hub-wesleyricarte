@@ -1,4 +1,3 @@
-import api from "../../../services/api";
 import Button from "../../Button";
 import {
 	StyledDivButtonsModal,
@@ -9,8 +8,10 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { updateTechSchema } from "./updateTechSchema";
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { AiOutlineClose } from "react-icons/ai";
+import { useContext } from "react";
+import { TechContext } from "../../../contexts/TechContext";
 
 const ModalUpdateTech = ({
 	setShowModalUpdateTech,
@@ -18,6 +19,8 @@ const ModalUpdateTech = ({
 	techTitle,
 	techStatus,
 }) => {
+	const { putTech, deleteTech } = useContext(TechContext);
+
 	const {
 		register,
 		handleSubmit,
@@ -29,85 +32,20 @@ const ModalUpdateTech = ({
 
 	const onSubmitFunction = ({ title, status }) => {
 		const newTech = { title, status };
-		putTech(newTech);
+		putTech(newTech, techId);
+		setTimeout(() => {
+			setShowModalUpdateTech(false);
+			window.location.reload();
+		}, 2800);
 	};
 
 	const deleteFunction = (techId) => {
 		deleteTech(techId);
+		setTimeout(() => {
+			setShowModalUpdateTech(false);
+			window.location.reload();
+		}, 2800);
 	};
-
-	async function putTech(newTech) {
-		try {
-			const request = await api.put("/users/techs/" + techId, newTech);
-
-			const response = await request.data;
-
-			toast.success(
-				`Técnologia ${response.title} atualizada com status ${response.status}!`,
-				{
-					style: {
-						border: "solid 2px var(--color-success)",
-					},
-					iconTheme: {
-						primary: "var(--color-success)",
-						secondary: "#ffffff",
-					},
-					duration: 5000,
-				}
-			);
-
-			setTimeout(() => {
-				setShowModalUpdateTech(false);
-				window.location.reload();
-			}, 2800);
-		} catch (error) {
-			console.error(error);
-			toast.error(`${error.response.data.message}`, {
-				style: {
-					border: "solid 2px var(--color-negative)",
-				},
-				iconTheme: {
-					primary: "var(--color-negative)",
-					secondary: "#ffffff",
-				},
-				duration: 5000,
-			});
-		}
-	}
-
-	async function deleteTech(techId) {
-		try {
-			await api.delete("/users/techs/" + techId);
-
-			toast.success(`Técnologia excluída!`, {
-				style: {
-					border: "solid 2px var(--color-success)",
-				},
-				iconTheme: {
-					primary: "var(--color-success)",
-					secondary: "#ffffff",
-				},
-				duration: 3000,
-			});
-
-			setTimeout(() => {
-				setShowModalUpdateTech(false);
-				window.location.reload();
-			}, 2800);
-		} catch (error) {
-			console.error(error);
-			toast.error(`${error.response.data.message}`, {
-				style: {
-					border: "solid 2px var(--color-negative)",
-				},
-				iconTheme: {
-					primary: "var(--color-negative)",
-					secondary: "#ffffff",
-				},
-				duration: 5000,
-			});
-		}
-	}
 
 	return (
 		<StyledModal>
